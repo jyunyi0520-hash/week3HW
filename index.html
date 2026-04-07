@@ -4,8 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>🌸 夢幻馬卡龍記帳本</title>
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    function onGisLoaded() {
+      if (window.initGis) window.initGis();
+    }
+  </script>
   <script src="https://accounts.google.com/gsi/client" async defer onload="onGisLoaded()"></script>
 </head>
 
@@ -15,8 +20,8 @@
       <div class="header-content">
         <h1 class="logo"><i class="fa-solid fa-wand-magic-sparkles"></i> 夢幻記帳本</h1>
         <div class="auth-btns">
-          <button id="btnSignIn" class="btn btn-login" disabled><i class="fa-brands fa-google"></i> 登入</button>
-          <button id="btnSignOut" class="btn btn-outline" disabled><i class="fa-solid fa-right-from-bracket"></i> 登出</button>
+          <button id="btnSignIn" class="btn btn-login"><i class="fa-brands fa-google"></i> 登入</button>
+          <button id="btnSignOut" class="btn btn-outline" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> 登出</button>
         </div>
       </div>
     </header>
@@ -29,7 +34,6 @@
             <label><i class="fa-solid fa-calendar-day"></i> 日期</label>
             <input id="fDate" type="date" required />
           </div>
-
           <div class="row-2">
             <div class="input-group">
               <label><i class="fa-solid fa-tags"></i> 類型</label>
@@ -43,7 +47,6 @@
               <select id="fCategory" required></select>
             </div>
           </div>
-
           <div class="row-2">
             <div class="input-group">
               <label><i class="fa-solid fa-credit-card"></i> 付款</label>
@@ -51,24 +54,22 @@
             </div>
             <div class="input-group">
               <label><i class="fa-solid fa-coins"></i> 金額</label>
-              <input id="fAmount" type="number" min="0" step="1" inputmode="numeric" required placeholder="多少錢？" />
+              <input id="fAmount" type="number" min="0" step="1" required placeholder="0" />
             </div>
           </div>
-
           <div class="input-group">
             <label><i class="fa-solid fa-comment-dots"></i> 說明</label>
-            <input id="fDescription" type="text" placeholder="買了什麼好東西呢？" required />
+            <input id="fDescription" type="text" placeholder="買了什麼呢？" required />
           </div>
-
           <div class="form-actions">
             <button id="btnSubmit" class="btn btn-submit" type="submit" disabled>
               <i class="fa-solid fa-heart"></i> 儲存紀錄
             </button>
-            <button id="btnReload" class="btn btn-icon" type="button" disabled title="重新載入">
+            <button id="btnReload" class="btn btn-icon" type="button" disabled>
               <i class="fa-solid fa-arrows-rotate"></i>
             </button>
           </div>
-          <p id="status" class="status-text"></p>
+          <p id="status" class="status-text">載入中...</p>
         </form>
       </section>
 
@@ -77,7 +78,6 @@
           <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> 本月概覽</h2>
           <input id="monthPicker" type="month" disabled class="month-selector" />
         </div>
-
         <div class="stats-container">
           <div class="stat-item inc">
             <span class="stat-label">收入</span>
@@ -92,7 +92,6 @@
             <div id="sumNet" class="stat-value">0</div>
           </div>
         </div>
-
         <h3 class="sub-title">支出排行榜 🏆</h3>
         <div id="categoryBreakdown" class="breakdown-area"></div>
       </section>
@@ -119,11 +118,7 @@
         </div>
       </section>
     </main>
-
-    <footer class="footer">
-      <p>每一筆紀錄，都是認真生活的證明 ✨</p>
-    </footer>
   </div>
-  <script src="./app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
