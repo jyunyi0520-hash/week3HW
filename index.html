@@ -10,133 +10,120 @@
 </head>
 
 <body>
-  <header class="container main-header">
-    <div class="row space-between center">
-      <h1 class="logo-text"><i class="fa-solid fa-wand-magic-sparkles"></i> 夢幻記帳本</h1>
-      <div class="row gap">
-        <button id="btnSignIn" class="btn btn-login" disabled>
-          <i class="fa-brands fa-google"></i> 登入
-        </button>
-        <button id="btnSignOut" class="btn" disabled>
-          <i class="fa-solid fa-right-from-bracket"></i> 登出
-        </button>
+  <div class="app-wrapper">
+    <header class="container">
+      <div class="header-content">
+        <h1 class="logo"><i class="fa-solid fa-wand-magic-sparkles"></i> 夢幻記帳本</h1>
+        <div class="auth-btns">
+          <button id="btnSignIn" class="btn btn-login" disabled><i class="fa-brands fa-google"></i> 登入</button>
+          <button id="btnSignOut" class="btn btn-outline" disabled><i class="fa-solid fa-right-from-bracket"></i> 登出</button>
+        </div>
       </div>
-    </div>
-    <p class="status-top"><i class="fa-solid fa-cloud"></i> 資料同步中...</p>
-  </header>
+    </header>
 
-  <main class="container grid">
-    <section class="card glass">
-      <h2 class="card-title"><i class="fa-solid fa-pen-nib"></i> 紀錄一筆小確幸</h2>
-
-      <form id="recordForm" class="form">
-        <div class="grid2">
-          <label>
-            <i class="fa-solid fa-calendar-day"></i> 日期
+    <main class="container main-grid">
+      <section class="card-glass">
+        <h2 class="section-title"><i class="fa-solid fa-pen-fancy"></i> 紀錄一筆小確幸</h2>
+        <form id="recordForm" class="cute-form">
+          <div class="input-group">
+            <label><i class="fa-solid fa-calendar-day"></i> 日期</label>
             <input id="fDate" type="date" required />
-          </label>
+          </div>
 
-          <label>
-            <i class="fa-solid fa-tag"></i> 類型
-            <select id="fType" required>
-              <option value="支出">💸 支出</option>
-              <option value="收入">💰 收入</option>
-            </select>
-          </label>
+          <div class="row-2">
+            <div class="input-group">
+              <label><i class="fa-solid fa-tags"></i> 類型</label>
+              <select id="fType" required>
+                <option value="支出">💸 支出</option>
+                <option value="收入">💰 收入</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label><i class="fa-solid fa-layer-group"></i> 分類</label>
+              <select id="fCategory" required></select>
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="input-group">
+              <label><i class="fa-solid fa-credit-card"></i> 付款</label>
+              <select id="fPayment" required></select>
+            </div>
+            <div class="input-group">
+              <label><i class="fa-solid fa-coins"></i> 金額</label>
+              <input id="fAmount" type="number" min="0" step="1" inputmode="numeric" required placeholder="多少錢？" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fa-solid fa-comment-dots"></i> 說明</label>
+            <input id="fDescription" type="text" placeholder="買了什麼好東西呢？" required />
+          </div>
+
+          <div class="form-actions">
+            <button id="btnSubmit" class="btn btn-submit" type="submit" disabled>
+              <i class="fa-solid fa-heart"></i> 儲存紀錄
+            </button>
+            <button id="btnReload" class="btn btn-icon" type="button" disabled title="重新載入">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+          </div>
+          <p id="status" class="status-text"></p>
+        </form>
+      </section>
+
+      <section class="card-glass">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> 本月概覽</h2>
+          <input id="monthPicker" type="month" disabled class="month-selector" />
         </div>
 
-        <div class="grid2">
-          <label>
-            <i class="fa-solid fa-layer-group"></i> 分類
-            <select id="fCategory" required></select>
-          </label>
-
-          <label>
-            <i class="fa-solid fa-credit-card"></i> 付款方式
-            <select id="fPayment" required></select>
-          </label>
+        <div class="stats-container">
+          <div class="stat-item inc">
+            <span class="stat-label">收入</span>
+            <div id="sumIncome" class="stat-value">0</div>
+          </div>
+          <div class="stat-item exp">
+            <span class="stat-label">支出</span>
+            <div id="sumExpense" class="stat-value">0</div>
+          </div>
+          <div class="stat-item net">
+            <span class="stat-label">結餘</span>
+            <div id="sumNet" class="stat-value">0</div>
+          </div>
         </div>
 
-        <div class="grid2">
-          <label>
-            <i class="fa-solid fa-coins"></i> 金額
-            <input id="fAmount" type="number" min="0" step="1" inputmode="numeric" required placeholder="0" />
-          </label>
+        <h3 class="sub-title">支出排行榜 🏆</h3>
+        <div id="categoryBreakdown" class="breakdown-area"></div>
+      </section>
 
-          <label>
-            <i class="fa-solid fa-comment-dots"></i> 說明
-            <input id="fDescription" type="text" placeholder="買了什麼好東西？" required />
-          </label>
+      <section class="card-glass full-width">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fa-solid fa-list-check"></i> 明細小報</h2>
+          <button id="btnRefresh" class="btn btn-outline btn-sm" disabled><i class="fa-solid fa-sync"></i> 刷新</button>
         </div>
-
-        <div class="row gap mt-1">
-          <button id="btnSubmit" class="btn btn-primary" type="submit" disabled>
-            <i class="fa-solid fa-heart"></i> 儲存紀錄
-          </button>
-          <button id="btnReload" class="btn" type="button" disabled>
-            <i class="fa-solid fa-rotate"></i>
-          </button>
+        <div class="table-scroll">
+          <table class="macaron-table">
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>類型</th>
+                <th>分類</th>
+                <th class="text-right">金額</th>
+                <th>說明</th>
+                <th>方式</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTbody"></tbody>
+          </table>
         </div>
+      </section>
+    </main>
 
-        <p id="status" class="status-msg"></p>
-      </form>
-    </section>
-
-    <section class="card glass">
-      <div class="row space-between center">
-        <h2 class="card-title"><i class="fa-solid fa-chart-pie"></i> 本月收支</h2>
-        <div class="row gap center">
-          <input id="monthPicker" type="month" disabled class="month-input" />
-        </div>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-box income">
-          <div class="stat-label"><i class="fa-solid fa-arrow-trend-up"></i> 總收入</div>
-          <div id="sumIncome" class="stat-value">0</div>
-        </div>
-        <div class="stat-box expense">
-          <div class="stat-label"><i class="fa-solid fa-arrow-trend-down"></i> 總支出</div>
-          <div id="sumExpense" class="stat-value">0</div>
-        </div>
-        <div class="stat-box net">
-          <div class="stat-label"><i class="fa-solid fa-wallet"></i> 剩餘錢包</div>
-          <div id="sumNet" class="stat-value">0</div>
-        </div>
-      </div>
-
-      <h3 class="sub-title">支出分佈圖</h3>
-      <div id="categoryBreakdown" class="breakdown-list"></div>
-    </section>
-
-    <section class="card glass full">
-      <div class="row space-between center mb-1">
-        <h2 class="card-title"><i class="fa-solid fa-list-ul"></i> 消費明細小報</h2>
-        <button id="btnRefresh" class="btn btn-circle" disabled><i class="fa-solid fa-sync-alt"></i></button>
-      </div>
-
-      <div class="table-container">
-        <table class="cute-table">
-          <thead>
-            <tr>
-              <th>日期</th>
-              <th>類型</th>
-              <th>分類</th>
-              <th class="right">金額</th>
-              <th>說明</th>
-              <th>付款</th>
-            </tr>
-          </thead>
-          <tbody id="recordsTbody"></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <footer class="container footer">
-    <p>☁️ 每一筆紀錄，都是生活的印記 ☁️</p>
-  </footer>
-
+    <footer class="footer">
+      <p>每一筆紀錄，都是認真生活的證明 ✨</p>
+    </footer>
+  </div>
   <script src="./app.js"></script>
 </body>
 </html>
