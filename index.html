@@ -3,118 +3,120 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>記帳工具 (Google Sheets)</title>
-  <link rel="stylesheet" href="./styles.css" />
-
-  <!-- 重要：用 onload 確保 GIS 載入完成後才初始化 -->
+  <title>🌸 夢幻馬卡龍記帳本</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://accounts.google.com/gsi/client" async defer onload="onGisLoaded()"></script>
 </head>
 
 <body>
-  <header class="container">
+  <header class="container main-header">
     <div class="row space-between center">
-      <h1>記帳工具</h1>
+      <h1 class="logo-text"><i class="fa-solid fa-wand-magic-sparkles"></i> 夢幻記帳本</h1>
       <div class="row gap">
-        <button id="btnSignIn" class="btn primary" disabled>登入 Google</button>
-        <button id="btnSignOut" class="btn" disabled>登出</button>
+        <button id="btnSignIn" class="btn btn-login" disabled>
+          <i class="fa-brands fa-google"></i> 登入
+        </button>
+        <button id="btnSignOut" class="btn" disabled>
+          <i class="fa-solid fa-right-from-bracket"></i> 登出
+        </button>
       </div>
     </div>
-    <p class="muted">資料來源：Google 試算表「記帳紀錄」「欄位表」</p>
+    <p class="status-top"><i class="fa-solid fa-cloud"></i> 資料同步中...</p>
   </header>
 
   <main class="container grid">
-    <section class="card">
-      <h2>新增記帳</h2>
+    <section class="card glass">
+      <h2 class="card-title"><i class="fa-solid fa-pen-nib"></i> 紀錄一筆小確幸</h2>
 
       <form id="recordForm" class="form">
         <div class="grid2">
           <label>
-            日期
+            <i class="fa-solid fa-calendar-day"></i> 日期
             <input id="fDate" type="date" required />
           </label>
 
           <label>
-            類型
+            <i class="fa-solid fa-tag"></i> 類型
             <select id="fType" required>
-              <option value="支出">支出</option>
-              <option value="收入">收入</option>
+              <option value="支出">💸 支出</option>
+              <option value="收入">💰 收入</option>
             </select>
           </label>
         </div>
 
         <div class="grid2">
           <label>
-            分類
+            <i class="fa-solid fa-layer-group"></i> 分類
             <select id="fCategory" required></select>
           </label>
 
           <label>
-            付款方式
+            <i class="fa-solid fa-credit-card"></i> 付款方式
             <select id="fPayment" required></select>
           </label>
         </div>
 
         <div class="grid2">
           <label>
-            金額
-            <input id="fAmount" type="number" min="0" step="1" inputmode="numeric" required />
+            <i class="fa-solid fa-coins"></i> 金額
+            <input id="fAmount" type="number" min="0" step="1" inputmode="numeric" required placeholder="0" />
           </label>
 
           <label>
-            說明
-            <input id="fDescription" type="text" placeholder="例如：早餐、房租、薪資" required />
+            <i class="fa-solid fa-comment-dots"></i> 說明
+            <input id="fDescription" type="text" placeholder="買了什麼好東西？" required />
           </label>
         </div>
 
-        <div class="row gap">
-          <button id="btnSubmit" class="btn primary" type="submit" disabled>新增</button>
-          <button id="btnReload" class="btn" type="button" disabled>重新讀取本月資料</button>
+        <div class="row gap mt-1">
+          <button id="btnSubmit" class="btn btn-primary" type="submit" disabled>
+            <i class="fa-solid fa-heart"></i> 儲存紀錄
+          </button>
+          <button id="btnReload" class="btn" type="button" disabled>
+            <i class="fa-solid fa-rotate"></i>
+          </button>
         </div>
 
-        <p id="status" class="status muted"></p>
+        <p id="status" class="status-msg"></p>
       </form>
     </section>
 
-    <section class="card">
+    <section class="card glass">
       <div class="row space-between center">
-        <h2>每月概覽</h2>
+        <h2 class="card-title"><i class="fa-solid fa-chart-pie"></i> 本月收支</h2>
         <div class="row gap center">
-          <label class="row gap center">
-            月份
-            <input id="monthPicker" type="month" disabled />
-          </label>
+          <input id="monthPicker" type="month" disabled class="month-input" />
         </div>
       </div>
 
-      <div class="stats">
-        <div class="stat">
-          <div class="muted">收入</div>
-          <div id="sumIncome" class="big">0</div>
+      <div class="stats-grid">
+        <div class="stat-box income">
+          <div class="stat-label"><i class="fa-solid fa-arrow-trend-up"></i> 總收入</div>
+          <div id="sumIncome" class="stat-value">0</div>
         </div>
-        <div class="stat">
-          <div class="muted">支出</div>
-          <div id="sumExpense" class="big">0</div>
+        <div class="stat-box expense">
+          <div class="stat-label"><i class="fa-solid fa-arrow-trend-down"></i> 總支出</div>
+          <div id="sumExpense" class="stat-value">0</div>
         </div>
-        <div class="stat">
-          <div class="muted">結餘</div>
-          <div id="sumNet" class="big">0</div>
+        <div class="stat-box net">
+          <div class="stat-label"><i class="fa-solid fa-wallet"></i> 剩餘錢包</div>
+          <div id="sumNet" class="stat-value">0</div>
         </div>
       </div>
 
-      <h3>支出分類統計</h3>
-      <div id="categoryBreakdown" class="breakdown"></div>
+      <h3 class="sub-title">支出分佈圖</h3>
+      <div id="categoryBreakdown" class="breakdown-list"></div>
     </section>
 
-    <section class="card full">
-      <div class="row space-between center">
-        <h2>本月明細</h2>
-        <div class="row gap">
-          <button id="btnRefresh" class="btn" disabled>刷新</button>
-        </div>
+    <section class="card glass full">
+      <div class="row space-between center mb-1">
+        <h2 class="card-title"><i class="fa-solid fa-list-ul"></i> 消費明細小報</h2>
+        <button id="btnRefresh" class="btn btn-circle" disabled><i class="fa-solid fa-sync-alt"></i></button>
       </div>
 
-      <div class="tableWrap">
-        <table class="table">
+      <div class="table-container">
+        <table class="cute-table">
           <thead>
             <tr>
               <th>日期</th>
@@ -122,7 +124,7 @@
               <th>分類</th>
               <th class="right">金額</th>
               <th>說明</th>
-              <th>付款方式</th>
+              <th>付款</th>
             </tr>
           </thead>
           <tbody id="recordsTbody"></tbody>
@@ -131,11 +133,10 @@
     </section>
   </main>
 
-  <footer class="container footer muted">
-    <small>Tips：欄位表若未填 Type，會被視為「支出/收入共用選項」。</small>
+  <footer class="container footer">
+    <p>☁️ 每一筆紀錄，都是生活的印記 ☁️</p>
   </footer>
 
-  <!-- 放最後，確保 DOM 先就緒 -->
   <script src="./app.js"></script>
 </body>
 </html>
