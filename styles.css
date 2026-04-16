@@ -1,300 +1,82 @@
-/* --- 1. 核心變數定義 --- */
 :root {
   --p-pink: #ffc2d1;
   --p-pink-dark: #ff85a1;
   --p-blue: #bde0fe;
   --p-purple: #cdb4db;
   --p-mint: #caffbf;
-  --p-yellow: #fdffb6;
   --text: #5b4b66;
   --muted: #a18eb1;
   --glass: rgba(255, 255, 255, 0.7);
-  --shadow: 0 8px 32px rgba(161, 142, 177, 0.15);
 }
 
-/* --- 2. 全域設定 --- */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: linear-gradient(135deg, #fdfcfb 0%, #e2d1f9 100%);
   background-attachment: fixed;
   color: var(--text);
-  font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+  font-family: sans-serif;
   min-height: 100vh;
-  line-height: 1.6;
 }
 
-.app-wrapper {
-  padding: 20px;
-}
+.app-wrapper { padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; }
 
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
+.header-content { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; }
+.logo { font-size: 1.5rem; font-weight: bold; color: var(--p-pink-dark); }
 
-/* --- 3. 頁首風格 --- */
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0 30px 0;
-}
+.main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.full-width { grid-column: 1 / -1; }
 
-.logo {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--p-pink-dark);
-  text-shadow: 2px 2px 0px white;
-}
-
-.logo i {
-  margin-right: 8px;
-}
-
-/* --- 4. 佈局結構 --- */
-.main-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-}
-
-.full-width {
-  grid-column: 1 / -1;
-}
-
-/* --- 5. 玻璃擬態卡片 --- */
 .card-glass {
   background: var(--glass);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-radius: 24px;
-  padding: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: var(--shadow);
-  transition: transform 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid white;
+  box-shadow: 0 8px 32px rgba(161, 142, 177, 0.1);
 }
 
-.card-glass:hover {
-  transform: translateY(-5px);
-}
+.section-title { font-size: 1.2rem; margin-bottom: 15px; color: var(--p-pink-dark); }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
 
-.section-title {
-  font-size: 1.25rem;
-  margin-bottom: 20px;
-  color: var(--p-pink-dark);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-/* --- 6. 表單元件 --- */
-.cute-form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.input-group label {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: var(--muted);
-}
-
-.row-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
+.cute-form { display: flex; flex-direction: column; gap: 15px; }
+.input-group { display: flex; flex-direction: column; gap: 5px; }
+.input-group label { font-size: 0.85rem; color: var(--muted); font-weight: bold; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 input, select {
-  padding: 12px 15px;
-  border-radius: 12px;
-  border: 2px solid transparent;
-  background: white;
-  color: var(--text);
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.2s;
+  padding: 10px; border-radius: 10px; border: 1px solid #ddd; background: white; outline: none;
 }
 
-input:focus, select:focus {
-  border-color: var(--p-purple);
-  box-shadow: 0 0 10px rgba(205, 180, 219, 0.3);
-}
-
-/* --- 7. 按鈕樣式 --- */
 .btn {
-  padding: 12px 20px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s;
-  font-size: 0.95rem;
+  padding: 10px 15px; border-radius: 50px; border: none; cursor: pointer; font-weight: bold;
+  display: inline-flex; align-items: center; gap: 5px; transition: 0.3s;
 }
+.btn:disabled { opacity: 0.5; }
+.btn-login { background: var(--p-blue); }
+.btn-submit { background: var(--p-pink); color: white; width: 100%; justify-content: center; }
+.btn-outline { background: white; border: 1px solid #ddd; }
+.btn-icon { background: var(--p-purple); color: white; }
 
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+.stats-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.stat-item { padding: 15px 5px; border-radius: 15px; text-align: center; }
+.stat-label { font-size: 0.8rem; display: block; margin-bottom: 5px; }
+.stat-value { font-size: 1.1rem; font-weight: bold; }
 
-.btn-login {
-  background: var(--p-blue);
-  color: #4a7a96;
-}
+.inc { background: var(--p-mint); } 
+.exp { background: var(--p-pink); } 
+.net { background: var(--p-blue); }
 
-.btn-submit {
-  background: linear-gradient(to right, var(--p-pink), #ff9eb5);
-  color: white;
-  width: 100%;
-  justify-content: center;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 15px rgba(255, 194, 209, 0.4);
-}
+.sub-title { font-size: 0.95rem; margin-bottom: 10px; }
+.breakdown-area { margin-top: 10px; }
 
-.btn-submit:hover:not(:disabled) {
-  transform: scale(1.02);
-  box-shadow: 0 6px 20px rgba(255, 194, 209, 0.6);
-}
+.table-scroll { overflow-x: auto; border-radius: 15px; }
+.macaron-table { width: 100%; border-collapse: collapse; background: white; }
+.macaron-table th { background: #fcfcfc; padding: 12px; text-align: left; font-size: 0.85rem; color: var(--muted); }
+.macaron-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+.text-right { text-align: right; }
 
-.btn-outline {
-  background: white;
-  border: 1px solid #eee;
-  color: var(--muted);
-}
+.status-text { font-size: 0.8rem; text-align: center; margin-top: 10px; color: var(--muted); }
 
-.btn-icon {
-  background: var(--p-purple);
-  color: white;
-  width: 45px;
-  height: 45px;
-  justify-content: center;
-}
-
-/* --- 8. 統計與排行榜 --- */
-.stats-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 25px;
-}
-
-.stat-item {
-  padding: 15px 10px;
-  border-radius: 18px;
-  text-align: center;
-}
-
-.stat-label {
-  font-size: 0.8rem;
-  display: block;
-  margin-bottom: 5px;
-  opacity: 0.8;
-}
-
-.stat-value {
-  font-size: 1.2rem;
-  font-weight: 800;
-}
-
-.inc { background: var(--p-mint); color: #588157; }
-.exp { background: var(--p-pink); color: #b56576; }
-.net { background: var(--p-blue); color: #4a7a96; }
-
-.sub-title {
-  font-size: 1rem;
-  margin-bottom: 15px;
-  color: var(--text);
-}
-
-.breakdown-area {
-  min-height: 100px;
-}
-
-/* --- 9. 表格樣式 --- */
-.table-scroll {
-  overflow-x: auto;
-  border-radius: 15px;
-  background: white;
-}
-
-.macaron-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.macaron-table th {
-  background: #fcf8ff;
-  padding: 15px;
-  text-align: left;
-  font-size: 0.9rem;
-  color: var(--muted);
-  border-bottom: 2px solid #f0e6f7;
-}
-
-.macaron-table td {
-  padding: 14px 15px;
-  font-size: 0.95rem;
-  border-bottom: 1px solid #f9f6fd;
-}
-
-.macaron-table tr:hover {
-  background-color: #fff9fb;
-}
-
-.text-right {
-  text-align: right;
-}
-
-/* --- 10. 輔助樣式 --- */
-.status-text {
-  font-size: 0.85rem;
-  text-align: center;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-.month-selector {
-  border: 1px solid var(--p-purple);
-  padding: 5px 10px;
-  color: var(--text);
-  border-radius: 8px;
-}
-
-/* --- 11. 響應式設計 --- */
-@media (max-width: 768px) {
-  .main-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .stats-container {
-    grid-template-columns: 1fr;
-  }
-
-  .header-content {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-}
+@media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
