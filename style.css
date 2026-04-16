@@ -73,9 +73,21 @@ input, select {
 
 .table-scroll { overflow-x: auto; border-radius: 15px; }
 .macaron-table { width: 100%; border-collapse: collapse; background: white; }
-.macaron-table th { background: #fcfcfc; padding: 12px; text-align: left; font-size: 0.85rem; color: var(--muted); }
-.macaron-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-.text-right { text-align: right; }
+
+/* --- 這裡修改了：所有欄位置中 --- */
+.macaron-table th { 
+  background: #fcfcfc; 
+  padding: 12px; 
+  text-align: center; /* 置中 */
+  font-size: 0.85rem; 
+  color: var(--muted); 
+}
+.macaron-table td { 
+  padding: 12px; 
+  border-bottom: 1px solid #eee; 
+  font-size: 0.9rem; 
+  text-align: center; /* 置中 */
+}
 
 .status-text { font-size: 0.8rem; text-align: center; margin-top: 10px; color: var(--muted); }
 
