@@ -127,12 +127,13 @@ async function submitRecord() {
 }
 
 function renderUI(items) {
+  // 渲染表格內容：確保 td 內沒有 text-right
   $("#recordsTbody").innerHTML = items.map(r => `
     <tr>
       <td>${r.date}</td>
       <td>${r.type}</td>
       <td>${r.cat}</td>
-      <td class="text-right">${r.amt.toLocaleString()}</td>
+      <td>${r.amt.toLocaleString()}</td>
       <td>${r.desc}</td>
       <td>${r.pay}</td>
     </tr>
@@ -154,7 +155,6 @@ function renderUI(items) {
   $("#sumExpense").textContent = exp.toLocaleString();
   $("#sumNet").textContent = (inc - exp).toLocaleString();
 
-  // 渲染排行榜
   const sorted = Object.entries(expMap).sort((a,b) => b[1]-a[1]);
   $("#categoryBreakdown").innerHTML = sorted.map(([cat, amt]) => {
     const percent = Math.round((amt / (exp || 1)) * 100);
@@ -171,7 +171,6 @@ function renderUI(items) {
   }).join("") || `<p style="font-size:0.8rem; color:var(--muted)">本月尚無支出紀錄 🌸</p>`;
 }
 
-// 初始化日期
 const now = new Date();
 $("#fDate").value = now.toISOString().split('T')[0];
 $("#monthPicker").value = now.toISOString().slice(0, 7);
